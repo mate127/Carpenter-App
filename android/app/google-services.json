@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "107003072752",
+    "project_id": "carpenter-app-8b725",
+    "storage_bucket": "carpenter-app-8b725.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107003072752:android:e944e616b895c98bf37235",
+        "android_client_info": {
+          "package_name": "com.mate.carpenter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107003072752-ap6bee65k2ucees606hu59vngf9ibieb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArLU39S0qbQQUxEF10vEcMnfk8qJINQOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107003072752-ap6bee65k2ucees606hu59vngf9ibieb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
