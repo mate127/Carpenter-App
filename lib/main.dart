@@ -1,5 +1,5 @@
 import 'package:carpenter_app/auth/auth.dart';
-import 'package:carpenter_app/screens/home.dart';
+import 'package:carpenter_app/screens/home_screen.dart';
 import 'package:carpenter_app/auth/login.dart';
 import 'package:carpenter_app/auth/register.dart';
 import 'package:carpenter_app/utilities/utils.dart';

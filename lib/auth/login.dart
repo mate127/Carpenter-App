@@ -1,6 +1,6 @@
 import 'package:carpenter_app/auth/forgot_password.dart';
 import 'package:carpenter_app/main.dart';
-import 'package:carpenter_app/screens/home.dart';
+import 'package:carpenter_app/screens/home_screen.dart';
 import 'package:carpenter_app/auth/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

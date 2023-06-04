@@ -1,10 +1,10 @@
+import 'package:carpenter_app/models/role.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart';
 import '../utilities/utils.dart';
-import '../screens/home.dart';
-import 'login.dart';
+import '../screens/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final Function() showLoginScreen;
@@ -24,9 +24,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .hasMatch(value);
   }
 
+  final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  Role role = Role.buyer;
 
   Future signUp() async {
     final isValid = _formKey.currentState!.validate();
@@ -38,6 +40,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
+      addUserDetails(
+          _usernameController.text.trim(), _emailController.text.trim(), role);
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     }
@@ -47,6 +51,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool passwordConfirmed() {
     return _passwordController.text.trim() ==
         _confirmPasswordController.text.trim();
+  }
+
+  Future addUserDetails(String username, String email, Role role) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .add({'username': username, 'email': email, 'role': role.toString()});
   }
 
   @override
@@ -83,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 60.0),
+              const SizedBox(height: 30.0),
               Form(
                 key: _formKey,
                 child: Column(
@@ -96,6 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const Text('Username',
                               style: TextStyle(fontSize: 15.0)),
                           TextFormField(
+                            controller: _usernameController,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15.0))),
@@ -171,6 +182,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const SizedBox(
                         height: 10.0,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Choose a role',
+                              style: TextStyle(fontSize: 15.0)),
+                          ListTile(
+                            title: const Text('Buyer'),
+                            leading: Radio<Role>(
+                              value: Role.buyer,
+                              groupValue: role,
+                              onChanged: (Role? value) {
+                                setState(() {
+                                  role = value!;
+                                });
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Carpenter'),
+                            leading: Radio<Role>(
+                              value: Role.carpenter,
+                              groupValue: role,
+                              onChanged: (Role? value) {
+                                setState(() {
+                                  role = value!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       ElevatedButton(
                           onPressed: () {
