@@ -1,4 +1,7 @@
 import 'package:carpenter_app/screens/add_product_screen.dart';
+import 'package:carpenter_app/screens/notification_screen.dart';
+import 'package:carpenter_app/screens/product_details.dart';
+import 'package:carpenter_app/screens/query_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +44,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const AddProductScreen()));
+                      builder: (context) => const NotificationScreen()));
             },
             child: const Text('Add product'),
             style:

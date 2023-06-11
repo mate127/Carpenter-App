@@ -129,6 +129,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          const Text('Sign in using your '),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      ForgotPasswordScreen()));
+                            },
+                            child: const Text(
+                              'phone number.',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           const Text('Not signed up? '),
                           GestureDetector(
                             onTap: widget.showRegisterScreen,
@@ -138,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           )
                         ],
-                      )
+                      ),
                     ]),
               ),
             ],

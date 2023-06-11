@@ -74,15 +74,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   const Text('Add material'),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                   ),
                 ],
               ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Upload image'),
+              ),
               const SizedBox(
-                height: 10.0,
+                height: 15.0,
               ),
               ElevatedButton(
-                  onPressed: () {}, child: const Text('Upload image'))
+                onPressed: () {},
+                child: const Text('Submit'),
+              ),
             ],
           ),
         ),

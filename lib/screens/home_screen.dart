@@ -41,10 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AuthScreen()));
+                              builder: (context) => const AuthScreen()));
                     },
                     child: const Text(
-                      'Sign out',
+                      'Sign in',
                       style: TextStyle(color: Colors.blue, fontSize: 17.0),
                     ),
                   ),
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const SizedBox(height: 10.0),
-            isProducts ? ProductsScreen() : AdvertisementScreen()
+            isProducts ? const ProductsScreen() : const AdvertisementScreen()
           ]),
         ),
       ),
