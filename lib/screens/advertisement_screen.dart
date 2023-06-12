@@ -1,8 +1,11 @@
+import 'package:carpenter_app/models/userModel.dart';
 import 'package:carpenter_app/screens/add_advertisement_screen.dart';
 import 'package:carpenter_app/screens/advertisement_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../models/role.dart';
 
 class AdvertisementScreen extends StatefulWidget {
   const AdvertisementScreen({Key? key}) : super(key: key);
@@ -22,22 +25,20 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
     CollectionReference advertisements =
         FirebaseFirestore.instance.collection('advertisements');
     QuerySnapshot snapshot = await advertisements.get();
-    // Map<String, dynamic> data = snapshot.docs as Map<String, dynamic>;
     List<QueryDocumentSnapshot> documents = snapshot.docs;
     for (var document in documents) {
       Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
       if (data != null) {
         Map<String, dynamic>? advertisement = {};
         advertisement['title'] = data['title'];
+        advertisement['description'] = data['description'];
         var documentRef = data['userRef'];
         DocumentSnapshot documentSnapshot = await documentRef.get();
         if (documentSnapshot.exists) {
           Map<String, dynamic> data =
               documentSnapshot.data() as Map<String, dynamic>;
-          // Access individual fields from the data map
           advertisement['user'] = data['username'];
           globalAdvertisementData.add(advertisement);
-          // Do something with the retrieved data
         }
       }
     }
@@ -102,7 +103,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             AdvertisementDetails(
-                                                data: data![index]))),
+                                                data: data[index]))),
                                 child: ListTile(
                                   title: Text(
                                     data[index]['title'],

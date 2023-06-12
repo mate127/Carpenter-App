@@ -38,11 +38,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context: context,
         builder: (context) => const Center(child: CircularProgressIndicator()));
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
-      addUserDetails(
-          _usernameController.text.trim(), _emailController.text.trim(), role);
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim());
+      addUserDetails(_usernameController.text.trim(),
+          _emailController.text.trim(), role, userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     }
@@ -54,10 +55,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _confirmPasswordController.text.trim();
   }
 
-  Future addUserDetails(String username, String email, Role role) async {
+  Future<void> addUserDetails(
+      String username, String email, Role role, String uid) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .add({'username': username, 'email': email, 'role': role.toString()});
+        .doc(uid)
+        .set({'username': username, 'email': email, 'role': role.toString()});
   }
 
   @override

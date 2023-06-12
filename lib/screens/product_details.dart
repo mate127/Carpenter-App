@@ -1,3 +1,4 @@
+import 'package:carpenter_app/screens/query_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -64,7 +65,14 @@ class _ProductDetailsState extends State<ProductDetails> {
               const SizedBox(
                 height: 10.0,
               ),
-              ElevatedButton(onPressed: () {}, child: const Text('Contact'))
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const QueryScreen()));
+                  },
+                  child: const Text('Contact'))
             ],
           ),
         ));

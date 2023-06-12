@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddAdvertisementScreen extends StatefulWidget {
@@ -8,7 +10,27 @@ class AddAdvertisementScreen extends StatefulWidget {
 }
 
 class _AddAdvertisementScreenState extends State<AddAdvertisementScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
   final _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+
+  addAdvertisement(String title, String description) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    DocumentReference userRef = users.doc(user?.uid);
+    CollectionReference ads =
+        FirebaseFirestore.instance.collection('advertisements');
+    await ads
+        .add({'title': title, 'description': description, 'userRef': userRef});
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +49,7 @@ class _AddAdvertisementScreenState extends State<AddAdvertisementScreen> {
                 children: [
                   const Text('Title', style: TextStyle(fontSize: 15.0)),
                   TextFormField(
+                    controller: _titleController,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15.0))),
@@ -41,6 +64,7 @@ class _AddAdvertisementScreenState extends State<AddAdvertisementScreen> {
                 children: [
                   const Text('Description', style: TextStyle(fontSize: 15.0)),
                   TextFormField(
+                    controller: _descriptionController,
                     textAlignVertical: TextAlignVertical.top,
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
@@ -55,7 +79,12 @@ class _AddAdvertisementScreenState extends State<AddAdvertisementScreen> {
               const SizedBox(
                 height: 10.0,
               ),
-              ElevatedButton(onPressed: () {}, child: const Text('Submit'))
+              ElevatedButton(
+                  onPressed: () {
+                    addAdvertisement(_titleController.text.trim(),
+                        _descriptionController.text.trim());
+                  },
+                  child: const Text('Submit'))
             ],
           ),
         ),
